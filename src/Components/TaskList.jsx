@@ -1,27 +1,20 @@
 import React from "react";
 import TaskItem from "./TaskItem";
 
-const TaskList = ({ todos, setTodos, activeTab }) => {
-  const filteredTodos = todos.filter((todo) => {
-    if (activeTab === "Tasks") {
-      return !todo.completedOn; // Show tasks that are not completed
-    } else if (activeTab === "Completed") {
-      return todo.completedOn; // Show tasks that are completed
-    }
-    return true; // Default to showing all tasks
-  });
+const TaskList = ({ allTasks, setAllTasks }) => {
+
 
   return (
     <div>
-      {filteredTodos.map((item, i) => (
+      {allTasks.map((task, index) => (
         <TaskItem
-          key={i}
-          index={i}
-          item={item}
-          todos={todos}
-          setTodos={setTodos}
-        />
-      ))}
+          key={index}
+          allTasks={allTasks}
+          setAllTasks={setAllTasks}
+          task={task}
+          index={index}/>
+      ))
+      }
     </div>
   );
 };

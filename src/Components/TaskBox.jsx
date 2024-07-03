@@ -4,43 +4,25 @@ import Tabs from "./Tabs";
 import TaskList from "./TaskList";
 
 const TaskBox = () => {
-  const [newTitle, setNewTitle] = useState("");
-  const [newDescription, setNewDescription] = useState("");
-  const [todos, setTodos] = useState([]);
   const [activeTab, setActiveTab] = useState("Tasks");
-
-  const handleAddTodo = () => {
-    let newTodoItem = {
-      title: newTitle,
-      description: newDescription,
-    };
-
-    let updatedTodosArr = [...todos, newTodoItem];
-
-    setTodos(updatedTodosArr);
-    localStorage.setItem("todoList", JSON.stringify(updatedTodosArr));
-    setNewTitle("");
-    setNewDescription("");
-  };
-
-  useEffect(() => {
-    let savedTodoList = JSON.parse(localStorage.getItem("todoList"));
-    if (savedTodoList) {
-      setTodos(savedTodoList);
-    }
-  }, []);
-
+  const [allTasks, setAllTasks] = useState([]);
+  const [newTitle , setNewTitle] = useState("");
+  const [newDescription, setNewDescription] = useState("");
   return (
     <div className="bg-gray-700 rounded-sm max-w-5xl w-full h-auto p-8">
       <TaskInput
-        newTitle={newTitle}
-        setNewTitle={setNewTitle}
-        newDescription={newDescription}
-        setNewDescription={setNewDescription}
-        handleAddTodo={handleAddTodo}
-      />
+      newTitle={newTitle}
+      setNewTitle={setNewTitle}
+      newDescription={newDescription}
+      setNewDescription={setNewDescription}
+      allTasks={allTasks}
+      setAllTasks={setAllTasks}
+       />
       <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
-      <TaskList todos={todos} setTodos={setTodos} activeTab={activeTab} />
+      <TaskList 
+      activeTab={activeTab} 
+      setAllTasks={setAllTasks}
+      allTasks={allTasks}/>
     </div>
   );
 };
