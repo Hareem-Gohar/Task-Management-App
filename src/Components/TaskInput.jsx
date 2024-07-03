@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from './Button'
 
 const TaskInput = ({ newTitle, setNewTitle, newDescription, setNewDescription , allTasks , setAllTasks }) => {
@@ -13,7 +13,15 @@ const TaskInput = ({ newTitle, setNewTitle, newDescription, setNewDescription , 
     setAllTasks(updatedTodoArr);
     setNewTitle('');
     setNewDescription('');
+    localStorage.setItem("todoList",JSON.stringify(updatedTodoArr))
   }
+  useEffect(()=>{
+    let savedTodoList = JSON.parse(localStorage.getItem("todoList"));
+    if(savedTodoList){
+      setAllTasks(savedTodoList)
+    }
+  },[])
+
   return (
     <div className='flex flex-wrap justify-between gap-y-5 w-full border-b-2 border-b-slate-600 pb-5'>
       <div className="flex flex-col gap-3 w-full sm:w-[47%] md:w-2/5">
