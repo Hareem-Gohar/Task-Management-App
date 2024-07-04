@@ -1,7 +1,16 @@
 import React from "react";
 import { MdDeleteOutline, MdDoneOutline } from "react-icons/md";
 
-const TaskItem = ({ allTasks , index , task }) => {
+const TaskItem = ({ allTasks , index , task, setAllTasks }) => {
+  const deltBtn = () =>{
+    let reducedTodo = [...allTasks];
+    reducedTodo.splice(index,1);
+    localStorage.setItem("todoList", 
+      JSON.stringify(reducedTodo)
+    )
+    setAllTasks(reducedTodo);
+  }
+
   return (
     <>
       <div
@@ -17,6 +26,7 @@ const TaskItem = ({ allTasks , index , task }) => {
           <MdDeleteOutline
             className="hover:text-red-400 hover:cursor-pointer"
             fontSize={35}
+            onClick={()=>deltBtn(index)}
           />
           <MdDoneOutline
             className="hover:text-green-400 hover:cursor-pointer"
