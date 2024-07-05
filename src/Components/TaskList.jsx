@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TaskItem from "./TaskItem";
 
 const TaskList = ({ activeTab, allTasks, setAllTasks }) => {
@@ -23,15 +23,18 @@ const TaskList = ({ activeTab, allTasks, setAllTasks }) => {
 
     let updatedCompTodos = [...completedTodos, filteredItem];
     setCompleteTodos(updatedCompTodos);
+    localStorage.setItem("CompTodos", JSON.stringify(updatedCompTodos));
 
     let updatedTasks = allTasks.filter((_, idx) => idx !== index);
     setAllTasks(updatedTasks);
+    localStorage.setItem("todoList", JSON.stringify(updatedTasks));
   };
 
   const deltBtn = (index, isCompleted) => {
     if (isCompleted) {
       let updatedCompTodos = completedTodos.filter((_, idx) => idx !== index);
       setCompleteTodos(updatedCompTodos);
+      localStorage.setItem("CompTodos", JSON.stringify(updatedCompTodos));
     } else {
       let reducedTodo = [...allTasks];
       reducedTodo.splice(index, 1);
@@ -39,6 +42,14 @@ const TaskList = ({ activeTab, allTasks, setAllTasks }) => {
       setAllTasks(reducedTodo);
     }
   };
+
+  useEffect(() => {
+    // Load tasks from localStorage
+    const storedTasks = JSON.parse(localStorage.getItem("todoList")) || [];
+    const storedCompTodos = JSON.parse(localStorage.getItem("CompTodos")) || [];
+    setAllTasks(storedTasks);
+    setCompleteTodos(storedCompTodos);
+  }, []);
 
   return (
     <>
